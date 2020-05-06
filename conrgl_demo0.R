@@ -100,4 +100,3 @@ while(1){
     if(flag_halt==1)return(0); ## flag_haltが１ならば終了する    
 }
 
-

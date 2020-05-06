@@ -64,6 +64,8 @@ mget_label <- function(x){return(x$label[x$state]);}
 mget_n <- function(x){return(x$n);}
 mget_color <- function(x){return(x$color[x$state]);}
 
+
+
 ## fuction for collecting values from menu
 get_value <- function(x,target,unlis=TRUE){
     if(target=="state")mget_func=mget_state;
@@ -74,6 +76,10 @@ get_value <- function(x,target,unlis=TRUE){
     if(unlis==FALSE)return(lapply(menu,mget_func));
     
 }
+
+
+oget_type <- function(x){return(x$type);}
+
 
 ## function for plotting menu
 plot_menu <- function (){
@@ -97,6 +103,28 @@ plot_menu <- function (){
             text(y = c(corners[4],corners[3]), x = rep(corners[1]-offset,2), labels=c("end","hide"),col=c(color_end,"blue"),srt = 0,pos=4,cex=1.1)},
             bg.color=cgl.window_bg_color)
     }
+    sob=scene3d()$objects;
+    sob_type=unlist(lapply(sob,oget_type));
+    sob_id=as.integer(names(sob));
+
+    bg_id=sob_id[which(sob_type=="background")];
+    qu_id=sob_id[which(sob_type=="quads")];
+    line_id=sob_id[which(sob_type=="lines")];    
+    if(length(bg_id)>1){
+        rgl.pop(id=bg_id[-which.max(bg_id)]);
+    }
+    if(length(qu_id)>3){
+        qu_id=qu_id[-which.max(qu_id)];
+        qu_id=qu_id[-which.max(qu_id)];
+        rgl.pop(id=qu_id);
+    }
+    if(length(line_id)>3){
+        line_id=line_id[-which.max(line_id)];
+        line_id=line_id[-which.max(line_id)];
+        rgl.pop(id=line_id);
+   }
+ 
+    ##rgl.clear(type="background");
 }
 
 ## action for pause/restart
@@ -137,8 +165,8 @@ action_palette <-function(mst){
             cv[which(cv>ncol)]=ncol;
             b1 <<- terrain3d(x,x,z,color=col_pal[cv]);
             
-            
-            delFromSubscene3d(b0);
+            rgl.pop(id=c(b0));
+            ##delFromSubscene3d(b0);
             b0 <<- b1;
         }
     cgl.plot();
@@ -151,8 +179,9 @@ action_dim <-function(mst){
 
     obnames=names(c(obj_deco3d));
     del_list=which((obnames=="axes") + (obnames=="xlab") + (obnames=="ylab") + (obnames=="zlab")>0);
-    if(length(del_list)>0){        
-        delFromSubscene3d((c(obj_deco3d)[del_list]));
+    if(length(del_list)>0){
+        rgl.pop(id=(c(obj_deco3d)[del_list]));
+        ##delFromSubscene3d((c(obj_deco3d)[del_list]));
       }
 
     if(cgl.plot_dim == 2){
@@ -182,8 +211,9 @@ action_axes <-function(mst){
     if(mst==2){
         obnames=names(c(obj_deco3d));
         del_list=which((obnames=="axes") + (obnames=="xlab") + (obnames=="ylab") + (obnames=="zlab")>0);
-        if(length(del_list)>0){        
-            delFromSubscene3d((c(obj_deco3d)[del_list]));
+        if(length(del_list)>0){
+            rgl.pop(id=(c(obj_deco3d)[del_list]));
+            ##delFromSubscene3d((c(obj_deco3d)[del_list]));
         }
     }
     if(mst==1){
@@ -318,7 +348,9 @@ cgl.plot <-function (){
         if(cgl.plot_dim ==2 )b1 <<- show2d(cgl.plotR(),width=cgl.pwin_size,height=cgl.pwin_size);
         
         if(flag_init==0){
-            delFromSubscene3d(b0);            
+            rgl.pop(id=b0);
+
+            ##delFromSubscene3d(b0);            
         }else{
             flag_init <<- 0;
             
@@ -436,5 +468,6 @@ while(1){
     Sys.sleep(0.001); ##0.001秒待機
     if(flag_halt==1)return(0); ## flag_haltが１ならば終了する    
 }
+
 
 
