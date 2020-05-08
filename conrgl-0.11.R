@@ -228,7 +228,7 @@ action_dim <-function(mst){
     try(remove_obj(type="bboxdeco"));
 
     if(cgl.plot_dim == 2){
-        if(flag_pause==1)cgl.plot();                
+        if((flag_pause==1)+(flag_halt==1) > 0)cgl.plot();                
         view3d(theta=0,phi=0,fov=0,zoom=cgl.win_zoom_2d);
         obj_deco3d <<- decorate3d(xlim=cgl.xlim,ylim=cgl.ylim,zlim=cgl.zlim,box=FALSE,axes=FALSE,aspect=TRUE,xlab=NULL,ylab=NULL,zlab=NULL,col="white");
 
