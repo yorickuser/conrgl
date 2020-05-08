@@ -7,6 +7,7 @@
 
 library(rgl)
 
+plotR_only_pause=1;
 ## window size and position
 cgl.window_size=600;
 cgl.window_pos_x=310;
@@ -15,7 +16,6 @@ cgl.window_bg_color="gray"
 
 cgl.win_zoom_2d=0.72; ## zoom for par3d function in 2D plot
 cgl.pwin_size=600; ## width and height for show2d function in 2D plot
-
 cgl.plot_dim=3; ## plot dimension (2 for 2D and 3 for 3D)
 
 cgl.b0=0;
@@ -197,6 +197,16 @@ action_rotate <- function(mst){
 
 ##action for plotting in R-window
 action_plotR <-function(mst){
+    if(plotR_only_pause==1){
+        if(cgl.plot_dim==2){
+        flag_pause <<- 1;
+        menu$pause$state <<- 2;
+    }
+    }
+    devl=dev.list();
+    pngid=which(names(devl)=="png")
+    if(length(pngid)>0)dev.off(devl[pngid]);
+
     cgl.plotR();
 }
 
@@ -218,7 +228,7 @@ action_dim <-function(mst){
     try(remove_obj(type="bboxdeco"));
 
     if(cgl.plot_dim == 2){
-        cgl.plot();                
+        if(flag_pause==1)cgl.plot();                
         view3d(theta=0,phi=0,fov=0,zoom=cgl.win_zoom_2d);
         obj_deco3d <<- decorate3d(xlim=cgl.xlim,ylim=cgl.ylim,zlim=cgl.zlim,box=FALSE,axes=FALSE,aspect=TRUE,xlab=NULL,ylab=NULL,zlab=NULL,col="white");
 
@@ -262,7 +272,7 @@ entercom <- function(){
     coms=readline("enter command: ");
     if(coms!=""){
         print(try(eval(parse(text=coms),envir=.GlobalEnv )));
-        ecom();
+        entercom();
         }
     else{
         cat("command-mode ended\n");
@@ -401,8 +411,18 @@ cgl.plot <-function (){
     if(cgl.plot_dim ==3 ){
             cgl.b1 <<- c(cgl.plotRgl(),cgl.b1);
             }
-        if(cgl.plot_dim ==2 )cgl.b1 <<- c(show2d(cgl.plotR(),width=cgl.pwin_size,height=cgl.pwin_size),cgl.b1);
-        
+    if(cgl.plot_dim ==2 ){
+       
+        if(plotR_only_pause==1){
+            if(flag_pause==0){
+            if(dev.cur()>1){
+                graphics.off();
+                dev.list();
+               }
+            }
+        }
+        cgl.b1 <<- c(show2d(cgl.plotR(),width=cgl.pwin_size,height=cgl.pwin_size),cgl.b1);
+    }
        
         if(length(cgl.b1)>1){
             try(rgl.pop(id=cgl.b1[2:length(cgl.b1)]));
