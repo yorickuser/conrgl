@@ -285,6 +285,8 @@ action_command <-function(mst){
     plot_menu();
     entercom();
     menu$command$state <<- 1;
+    if((flag_pause==1)+(flag_halt==1) > 0)cgl.plot();                
+
 }
 
 ## menu items
