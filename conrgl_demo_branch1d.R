@@ -5,8 +5,8 @@
 # published by the Free Software Foundation.
 # http://www.r-project.org/Licenses/
 
-##library(rgl); ##rglをロード
-##source("conrgl-0.12.R"); ##conrgl-0.12.Rを読む
+library(rgl); ##rglをロード
+source("conrgl-0.12.R"); ##conrgl-0.12.Rを読む
 
 K0=10.0; ##環境収容力の最大値
 sK=1.0; ##環境収容力の幅
