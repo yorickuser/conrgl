@@ -479,8 +479,8 @@ flag_show_menu_state=0; ##メニュー各項目の状態の表示/非表示
 # published by the Free Software Foundation.
 # http://www.r-project.org/Licenses/
 
-library(rgl); ##rglをロード
-source("conrgl-0.12.R"); ##conrgl-0.12.Rを読む
+##library(rgl); ##rglをロード
+##source("conrgl-0.12.R"); ##conrgl-0.12.Rを読む
  
 cgl.plot_dim=3; ##最初に表示する描画の次元
 cgl.xlim=c(-1,1); ##ｘ軸の表示範囲
