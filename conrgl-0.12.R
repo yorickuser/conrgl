@@ -7,7 +7,7 @@
 
 library(rgl)
 
-menu_seal_level=0;
+menu_seal_level=2;
 ## window size and position
 cgl.window_size=600;
 cgl.window_pos_x=310;
