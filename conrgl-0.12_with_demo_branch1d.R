@@ -7,7 +7,7 @@
 
 library(rgl)
 
-menu_seal_level=2;
+menu_seal_level=1;
 ## window size and position
 cgl.window_size=600;
 cgl.window_pos_x=310;
@@ -232,7 +232,7 @@ action_palette <-function(mst){
    
     col_pal <<- mypal(ncol);
     
-    cgl.plot();
+    if((flag_pause==1)+(flag_halt==1) > 0)cgl.plot();
 }
 
 ## action for switching plot dimension (2D/3D)
