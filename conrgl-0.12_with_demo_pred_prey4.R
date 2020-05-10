@@ -488,7 +488,7 @@ library(matrixStats);
 item_switch_pp=list(state=1,n=2,label=c("prey:height\npred:color","pred:height\nprey:color"),color=c("darkgreen","darkgreen"));
  ##switch_ppの動作
 action_switch_pp <- function(mst){ 
-    cgl.plot();
+    if((flag_pause==1)+(flag_halt==1) > 0)cgl.plot();
 }
 
 ##メニューにswitch_ppを追加
@@ -542,8 +542,8 @@ nlevs2=7; ##等高線の数（捕食者）
 mypal2=heat.colors; ## current pallete
 clwd=rep(1.0,nlevs2);
 clwd[nlevs/2:nlevs2]=2.0;
-Rxlab="x (遅い<-- 被食者の移動速度 -->速い)"; ##x軸のラベル
-Rylab="y (遅い<-- 捕食者の移動速度 -->速い)"; ##y軸のラベル
+Rxlab="x (slow<-- prey migration -->fast)"; ##x軸のラベル
+Rylab="y (slow<-- prey migration -->fast)"; ##y軸のラベル
 
  ##2DプロットとRウインドウでの描画を行う関数
 cgl.plotR <- function(){
