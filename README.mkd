@@ -1,0 +1,6 @@
+#  Rでシミュレーション制御！
+
+- R言語とそのパッケージrgl （OpenGLをRで使うための関数群）でシミュレーションと可視化をマウス制御するプログラムを書きました。
+- 解説と動画は[http://beetle.starfree.jp/R_simulation.html](http://beetle.starfree.jp/R_simulation.html)
+
+Hirochi C. Ito
