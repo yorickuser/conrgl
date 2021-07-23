@@ -465,8 +465,5 @@ cgl.plot <-function (){
 }
 
 
-
-
-
 flag_show_menu_state=0; ##メニュー各項目の状態の表示/非表示
 
